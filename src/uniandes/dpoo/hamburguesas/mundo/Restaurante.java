@@ -55,6 +55,7 @@ public class Restaurante
 
     // ***************************************
     // CONSTRUCTOR
+    
     // ***************************************
 
     /**
@@ -83,7 +84,6 @@ public class Restaurante
     {
         if( pedidoEnCurso != null )
             throw new YaHayUnPedidoEnCursoException( pedidoEnCurso.getNombreCliente( ), nombreCliente );
-
         pedidoEnCurso = new Pedido( nombreCliente, direccionCliente );
     }
 
@@ -104,6 +104,7 @@ public class Restaurante
         String nombreArchivo = PREFIJO_FACTURAS + pedidoEnCurso.getIdPedido( ) + ".txt";
         pedidoEnCurso.guardarFactura( new File( CARPETA_FACTURAS + nombreArchivo ) );
         pedidoEnCurso = null;
+        pedidos.add(pedidoEnCurso);
     }
 
     /**
@@ -309,5 +310,25 @@ public class Restaurante
             reader.close( );
         }
     }
+
+    public void agregarElementoAlPedido(String nombreProducto) throws NoHayPedidoEnCursoException, ProductoFaltanteException {
+        if (pedidoEnCurso == null) {
+            throw new NoHayPedidoEnCursoException();
+        }
+        for (ProductoMenu producto : menuBase) {
+            if (producto.getNombre().equals(nombreProducto)) {
+                pedidoEnCurso.agregarProducto(producto);
+                return;
+            }
+        }
+        for (Combo combo : menuCombos) {
+            if (combo.getNombre().equals(nombreProducto)) {
+                pedidoEnCurso.agregarProducto(combo);
+                return;
+            }
+        }
+        throw new ProductoFaltanteException(nombreProducto);
+    }
+
 
 }

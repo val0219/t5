@@ -1,0 +1,9 @@
+Cliente: Antonio
+Dirección: Calle 170
+----------------
+todoterreno
+            25000
+----------------
+Precio Neto:  25000
+IVA:          4750
+Precio Total: 29750
